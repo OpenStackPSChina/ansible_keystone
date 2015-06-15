@@ -1,0 +1,16 @@
+---
+
+- name: Create Keystone users
+  keystone_user: >
+    user="{{ item.name }}"
+    password="{{ item.password }}"
+    tenant="{{ item.tenant }}"
+    email="{{ item.email|default('nobody@localhost') }}"
+    endpoint="{{ KEYSTONE_PROTOCOL }}://{{ KEYSTONE_SERVER }}:{{ KEYSTONE_ADMIN_PORT }}/v2.0"
+    token="{{ KEYSTONE_ADMIN_TOKEN }}"
+    state="{{ item.state|default('present') }}"
+  register: result
+  until: not result|failed
+  retries: "{{ KEYSTONE_API_RETRIES }}"
+  delay: "{{ KEYSTONE_API_RETRIES_DELAY }}"
+  with_items: keystone_users

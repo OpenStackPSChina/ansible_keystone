@@ -1,0 +1,10 @@
+---
+
+- include: create_db.yml
+- include: install.yml
+- include: configure.yml
+
+- include: endpoints.yml
+- include: tenants.yml
+- include: users.yml
+- include: roles.yml

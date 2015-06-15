@@ -1,0 +1,6 @@
+---
+
+- name: generate create_endpoint.sh
+  template: src="create_endpoint.sh.j2" dest=/tmp/create_endpoint.sh
+
+- command: bash /tmp/create_endpoint.sh

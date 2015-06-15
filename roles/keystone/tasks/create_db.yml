@@ -1,0 +1,18 @@
+---
+
+- name: create database for keystone
+  mysql_db:
+    state: present 
+    login_user: "root"
+    login_password: "{{ MARIADB_ROOT_PASS }}"
+    name: "{{ KEYSTONE_DB_NAME }}"
+
+- name: create database user for keystone
+  mysql_user:
+    state: present 
+    login_user: "root"
+    login_password: "{{ MARIADB_ROOT_PASS }}"
+    name: "{{ KEYSTONE_DB_USER_NAME }}"
+    password: "{{ KEYSTONE_DB_USER_PASS }}"
+    priv: "{{ KEYSTONE_DB_NAME }}.*:ALL,GRANT"
+    host: "%"

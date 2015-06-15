@@ -1,0 +1,14 @@
+---
+
+- name: Create Keystone tenants
+  keystone_user: >
+    tenant="{{ item.name }}"
+    tenant_description="{{ item.description|default('') }}"
+    endpoint="{{ KEYSTONE_PROTOCOL }}://{{ KEYSTONE_SERVER }}:{{ KEYSTONE_ADMIN_PORT }}/v2.0"
+    token="{{ KEYSTONE_ADMIN_TOKEN }}"
+    state="{{ item.state|default('present') }}"
+  register: result
+  until: not result|failed
+  retries: "{{ KEYSTONE_API_RETRIES }}"
+  delay: "{{ KEYSTONE_API_RETRIES_DELAY }}"
+  with_items: keystone_tenants

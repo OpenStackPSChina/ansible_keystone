@@ -1,0 +1,21 @@
+---
+
+- name: start keystone
+  service: name={{ KEYSTONE_SERVICE }} state=started
+  become: yes
+  become_method: sudo
+
+- name: stop keystone
+  service: name={{ KEYSTONE_SERVICE }} state=stopped
+  become: yes
+  become_method: sudo
+
+- name: reload keystone
+  service: name={{ KEYSTONE_SERVICE }} state=reloaded
+  become: yes
+  become_method: sudo
+
+- name: restart keystone
+  service: name={{ KEYSTONE_SERVICE }} state=restarted
+  become: yes
+  become_method: sudo

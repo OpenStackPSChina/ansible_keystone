@@ -1,0 +1,28 @@
+---
+
+#
+# Configure Keystone
+#
+
+#- name: generate admin token for keystone
+#  command: openssl rand -hex 10
+#  register: ADMIN_TOKEN
+
+- name: generate keystone.conf
+  template: src="keystone.conf.j2" dest=/etc/keystone/keystone.conf
+  become: yes
+  become_method: sudo
+
+- name: force reload keystone
+  command: service keystone force-reload
+  become: yes
+  become_method: sudo
+
+- name: sync keystone database
+  command: keystone-manage db_sync
+  become: yes
+  become_method: sudo
+  become_user: keystone
+
+- name: generate envrc
+  template: src="envrc.j2" dest=/home/{{ REMOTE_USER }}/envrc
